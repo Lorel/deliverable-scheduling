@@ -1,0 +1,85 @@
+% -*- root: Document.tex -*-
+
+\subsection{Configuration}
+\label{subsec:clustersetup:config}
+
+The configuration has to be given into the YAML file \texttt{config.yml} at the root of tool's code.
+This file has to be build like in the example~\ref{remote-swarm-manager-config}.
+All configurations options are detailed below.
+
+\begin{minipage}{\linewidth} %avoid splitting
+% \vspace{10pt}
+\begin{lstlisting}[language=YAML,caption={Configuration file example for \textsc{RemoteSwarmManager} CLI.},label=remote-swarm-manager-config][t]
+ssh:
+  user: 'host_user'
+  identity_file: 'path/to/ssh_keys/id_rsa'
+  public_key_file: 'path/to/ssh_keys/id_rsa.pub'
+  proxy:
+    user: 'proxy_user'
+    host: 'proxy_host'
+
+cluster:
+  manager: 172.16.0.30
+  manager_docker_port: 2380
+  node_docker_port: 2380
+  nodes:
+    -
+      ip: 172.16.0.2
+      cpu: 4
+      name: 'nursery-node-1'
+      group: 'nursery'
+    -
+      ip: 172.16.0.4
+      cpu: 4
+      name: 'young-node-1'
+      group: 'young'
+    -
+      ip: 172.16.0.6
+      cpu: 8
+      name: 'tenured-node-1'
+      group: 'tenured'
+
+swarm:
+  image: swarm:1.2.0
+  strategy: spread
+  host_image: docker:1.12.0-rc3-dind
+\end{lstlisting}
+\end{minipage}
+
+\subsubsection{SSH options}
+
+The CLI is using the protocol \textsc{SSH} to access to the different hosts of your cluster.
+
+\begin{itemize}
+  \item \texttt{user} (\emph{mandatory}): the user you want to use to connect to hosts;
+  \item \texttt{identity\_file} (\emph{mandatory}): the path to the private key to use to connect to hosts;
+  \item \texttt{public\_key\_file} (\emph{optional}): the path to the public key to use to connect to hosts - required only for using CLI's feature for exporting a public key on remote hosts;
+  \item \texttt{proxy} (\emph{optional}): the proxy to use to reach the different hosts - required only to use a proxy, it will use the same key than the one for hosts.
+\end{itemize}
+
+\subsubsection{Cluster options}
+
+Here are defined all the parameters related to the infrastructure of the cluster:
+
+\begin{itemize}
+  \item \texttt{manager} (\emph{mandatory}): IP address of host where the \textsc{Docker Swarm} manager will be deployed;
+  \item \texttt{manager\_docker\_port} (\emph{mandatory}): port where the \textsc{Docker Swarm} manager will listen;
+  \item \texttt{node\_docker\_port} (\emph{mandatory}): port where the \textsc{Docker Swarm} nodes will listen;
+  \item \texttt{nodes} (\emph{mandatory}): the list of the \textsc{Docker Swarm} nodes to set in the cluster, with for each:
+  \begin{itemize}
+    \item \texttt{ip} (\emph{mandatory}): IP address of the host;
+    \item \texttt{cpu} (\emph{mandatory}): number of CPUs of the host;
+    \item \texttt{name} (\emph{mandatory}): name to give to the host;
+    \item \texttt{group} (\emph{mandatory}): generation which the node is belonging to, either \texttt{nursery}, \texttt{young} or \texttt{tenured}.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Swarm options}
+
+Finally, few parameters about \textsc{Docker Swarm} have to be set:
+
+\begin{itemize}
+  \item \texttt{image} (\emph{mandatory}): the image of \texttt{Docker Swarm} to use;
+  \item \texttt{strategy} (\emph{mandatory}): the strategy of scheduling to give to \texttt{Docker Swarm} - it will be used only to schedule nodes on the nursery;
+  \item \texttt{host\_image} (\emph{mandatory}): the image of \texttt{Docker} to use on the nodes.
+\end{itemize}

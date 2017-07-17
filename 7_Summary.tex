@@ -1,0 +1,25 @@
+% -*- root: Document.tex -*-
+
+\chapter{Summary}
+\label{chap:summ}
+
+In this deliverable, we have presented the initial version of the specification, design and implementation of the \GP{} scheduler.
+This scheduler is seamlessly working on top of \textsc{Docker Swarm}, and is so far fully compliant with it.
+
+Efficient VM or container scheduling is particularly critical in cloud data centers to not only provide good performance, but also minimize the hardware resource required for running concurrent applications.
+This can, in turn, reduce the costs of operating a cloud infrastructure and, importantly, reduce the associated energy footprint.
+In particular, when efficiently packing containers on physical hosts, one can save significant amounts of energy by turning off unused servers.
+
+\GP{} is a new scheduler for containers that borrows ideas from generational garbage collectors.
+An original feature of \GP is that it does \emph{not} assume the properties of the containers and workloads to be known in advance.
+It relies instead on runtime monitoring to observe the resource usage of containers while in the ``nursery''.
+Containers are then run in a young generation of servers, which hold short-running jobs and experience relatively high turnaround.
+This collection of servers can also be elastically expanded or shrunk to quickly adapt to the demand.
+Long-running jobs are migrated to the old generation, which is composed of more stable and energy-efficient servers.
+The containers in the old generation run for a long time and typically experience relatively even load, hence they can be packed in a very efficient way on the servers without need for frequent migrations.
+
+We have implemented \GP in the context of \textsc{Docker Swarm} and evaluated it using a real-world trace.
+Our comparison against \textsc{Swarm}'s built-in schedulers shows that \GP does not add noticeable overheads while providing more efficient container packing, which can result in important energy savings.
+
+Our perspectives for \GP includes a careful sensitivity analysis of key parameters like the $k$-means value or the scheduling period.
+We also plan to evaluate the performances of \GP in a long-running deployment evolving not only CPU- and memory- intensive containers, but also network- and disk-intensive ones.

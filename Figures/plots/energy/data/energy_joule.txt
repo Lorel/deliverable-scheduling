@@ -1,0 +1,8 @@
+#numbers printed at the end of this command:
+#cut -d ' ' -f2,23,26,29,32,35,38,41,44,47,50,53,56,59,62,65,8-19 borg-1_100_1h/borg-spread.dat | tail -n+2 | luajit parser.lua
+#strategy joule
+spread 15995700770.13 1 1
+random 15459330897.311 0.96 2
+binpack 14646234982.375 0.91 3
+genpack 12362647012.674 0.77 4
+

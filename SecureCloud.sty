@@ -1,0 +1,404 @@
+\usepackage{times}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{rotating}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{algpseudocode} %% pulls in algorithmicx and algorithmic
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{lipsum}
+
+\usepackage{subfigure}
+% \usepackage{subcaption}
+
+\usepackage{dirtree}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{yfonts}
+\usepackage{amssymb}
+\usepackage{tabu}
+\usepackage{multicol}
+\usepackage{threeparttable}
+\usepackage{caption}
+\usepackage[top=2in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage{xspace}
+\usepackage{MnSymbol}
+\usepackage{pdfpages}
+
+\usepackage{mdframed}
+
+\usepackage{titlesec}
+\titleformat{\chapter}{\normalfont\huge\bfseries\sffamily}{\thechapter}{1em}{}
+\titleformat{\section}{\normalfont\Large\bfseries\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\sffamily}{\thesubsection}{1em}{}
+\titlespacing*{\chapter}{0pt}{-80pt}{10pt}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyfoot{} % clear all footer fields
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+\hbox{}
+\thispagestyle{plain}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+%% \usepackage{hyperref}
+%% \hypersetup{%
+%%   colorlinks=true,
+%%   linkcolor=Black,
+%%   linkbordercolor=white,
+%%   urlcolor  = Black,
+%%   anchorcolor = Black,
+%%   filecolor=  Black,
+%%   menucolor=  Black,  
+%%   runcolor = Black,
+%%   citecolor = Black,
+%%   allbordercolors = white,
+%%   pdfborder={0 0 0}, 
+%% }
+
+\usepackage[acronym,toc,xindy]{glossaries}
+\renewcommand*{\glsclearpage}{\clearpage} % Avoids blank page when
+                                          % building glossary
+
+\newcommand{\para}[1]{\noindent\textbf{#1}}
+\newcommand{\sys}{SecureCloud\xspace}
+\newcommand{\tinyskip}{\vspace{5pt}}
+\newcommand{\mypar}[1]{\tinyskip\noindent\textbf{#1.}\xspace}
+\newcommand{\myparr}[1]{\tinyskip\noindent\textbf{#1}\xspace}
+%\newcommand{\blt}{\raise .2ex\hbox{\tiny$\bullet$ }}
+\newcommand{\blt}{\textcolor{black}{\raisebox{.45ex}{\rule{.8ex}{.8ex}}}\space}
+
+\newcommand{\highlight}[1]{\colorbox{gray!10}{#1}}
+
+% cross references across documents
+\usepackage{xr}
+\externaldocument[REQ-]{../Document}
+
+%\newcommand{\crossrefChap}[1]{Chapter~\ref{#1}}
+%\newcommand{\crossrefReqChap}[1]{Chapter~\ref{REQ-#1}}
+%%\newcommand{\refChapInDeliv}[2]{\crossrefChap{#1} in Deliverable #2}
+%%\newcommand{\refChapInD11}[1]{\refChapInDeliv{REQ-#1}{D1.1}}
+%\newcommand{\refDoneone}{Deliverable D11}
+%\newcommand{\seeRefReq}[1]{see Req.~\ref{REQ-#1}, D1.1}
+%\newcommand{\seetwoRefReq}[2]{see Req.~\ref{REQ-#1} and~\ref{REQ-#2} in D1.1}
+%\newcommand{\seefiveRefReq}[5]{see Req.~\ref{REQ-#1},~\ref{REQ-#2},~\ref{REQ-#3},~\ref{REQ-#4} and~\ref{REQ-#5} in D1.1}
+
+% abbreviations
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\etal}{et al.~}
+\newcommand{\vs}{vs.\ }
+\newcommand{\cf}{cf.~}
+
+\newcommand{\unit}[1]{\mbox{\hspace{2pt}#1}\xspace}
+
+% Markup commands
+\newcommand{\todo}[1]{\textbf{\textcolor{red}{[TODO: #1]}}}
+\newcommand{\comment}[1]{\textbf{\textcolor{blue}{[Comment: #1]}}}
+\newcommand{\gap}{{\noindent\textbf{\color{red}[...]}}\xspace}
+
+\newcommand{\euguideline}[1]{\textit{\color{Magenta}{EU guideline:} \color{Gray}{#1}}}
+
+% Eliminates MacOS X error
+\def\findrootlanguage{%
+   \def\rootlanguagename{\languagename}%
+}
+
+% subscript and superscript commands
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+
+% Command for requirement table
+\newcounter{reqcounter}
+\newlength{\Descwidth}
+  \setlength{\Descwidth}{\textwidth}
+  \addtolength{\Descwidth}{-2\tabcolsep}
+\newcommand{\requirement}[6]{%
+\addtocounter{reqcounter}{1}\noindent%
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}|p{0.12\textwidth}|X|@{}}
+\hline
+\cellcolor[gray]{0.85}
+\textbf{R\arabic{reqcounter}}
+&
+\cellcolor[gray]{0.85}
+\textbf{#1}
+\tabularnewline
+\hline
+\multicolumn{2}{@{}|>{\raggedright}X|@{}}{%
+\begin{tabularx}{\Descwidth}{@{}>{\raggedright}X@{}}#2\end{tabularx}}
+\tabularnewline
+\hline
+\cellcolor[gray]{0.85} \textbf{Task: #3}
+& \cellcolor[gray]{0.85}
+\begin{tabular}[t]{@{}p{0.25\textwidth}l@{}}
+\textbf{Innovation: #4}
+& \textbf{Importance: #5}
+\tabularnewline
+\multicolumn{2}{@{}l@{}}{\textbf{Dependencies: #6}}
+\end{tabular}
+\tabularnewline
+\hline
+\end{tabularx}
+\end{center}}
+
+%% ==============================================================================================================================
+
+\DeclareRobustCommand*\textsubscript[1]{%
+  \@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+
+%% ==============================================================================================================================
+%% Cover page
+
+\newif\if@deliverable
+  \@deliverablefalse
+\newif\if@manreport
+  \@manreportfalse
+\newif\if@history
+  \@historyfalse
+\newif\if@resubmission
+  \@resubmissionfalse
+\newif\if@relatedTasks
+  \@relatedTasksfalse
+
+\DeclareOption{deliverable}
+  {\@deliverabletrue}
+\DeclareOption{manreport}
+  {\@manreporttrue}
+\DeclareOption{history}
+  {\@historytrue}
+\ProcessOptions
+
+%\graphicspath{{./Figures/}}
+\DeclareGraphicsExtensions{.pdf}
+
+
+
+\newcommand{\SECtitle}[1]{\def\@SECtitle{#1}}
+\newcommand{\SECidentifier}[1]{\def\@SECidentifier{#1}}
+\newcommand{\SECdueDate}[1]{\def\@SECdueDate{#1}}
+\newcommand{\SECsubmissionDate}[1]{\def\@SECsubmissionDate{#1}}
+\newcommand{\SECresubmissionDate}[1]{\@resubmissiontrue\def\@SECresubmissionDate{#1}}
+\newcommand{\SECeditor}[2]{\def\@SECeditorName{#1}\def\@SECeditorOrg{#2}}
+\newcommand{\SECcontributors}[1]{\def\@SECcontributors{#1}}
+\newcommand{\SECworkPackage}[1]{\def\@SECworkPackage{#1}}
+\newcommand{\SECversion}[1]{\def\@SECversion{#1}}
+\newcommand{\SECreviewerone}[2]{\def\@SECreviewerone{#1}\def\@SECrevieweroneOrg{#2}}
+\newcommand{\SECreviewertwo}[2]{\def\@SECreviewertwo{#1}\def\@SECreviewertwoOrg{#2}}
+% Add more reviewers if necessary
+%\newcommand{\SECreviewerthree}[2]{\def\@SECreviewerthree{#1}\def\@SECreviewerthreeOrg{#2}}
+\newcommand{\SECdissLevelPU}{\def\@SECisPU{$\surd$}}
+\newcommand{\SECdissLevelPP}{\def\@SECisPP{$\surd$}}
+\newcommand{\SECdissLevelRE}{\def\@SECisRE{$\surd$}}
+\newcommand{\SECdissLevelCO}{\def\@SECisCO{$\surd$}}
+\newcommand{\SECrevision}[5]{\@writefile{cov}{\hline \hfil #1\hfil&#2&#3&#4&#5\\}}
+\newcommand{\SECtask}[3]{\@relatedTaskstrue\@writefile{par}{\hline #1&#2&#3\\}}
+
+
+\def\@SECtitle{N/A}
+\def\@SECidentifier{N/A}
+\def\@SECdueDate{N/A}
+\def\@SECsubmissionDate{N/A}
+\def\@SECresubmissionDate{N/A}
+\def\@SECeditorName{N/A}
+\def\@SECeditorOrg{N/A}
+\def\@SECcontributors{N/A}
+\def\@SECworkPackage{N/A}
+\def\@SECversion{N/A}
+\def\@SECreviewerone{N/A}
+\def\@SECrevieweroneOrg{N/A}
+\def\@SECreviewertwo{N/A}
+\def\@SECreviewertwoOrg{N/A}
+% Add more reviewers if necessary
+%\def\@SECreviewerthree{N/A}
+%\def\@SECreviewerthreeOrg{N/A}
+\def\@SECisPP{}
+\def\@SECisPU{}
+\def\@SECisRE{}
+\def\@SECisCO{}
+
+\def\@SECcoordName{Prof.\ Christof Fetzer}
+\def\@SECcoordOrg{TU Dresden}
+\def\@SECcoordTel{+49 351 463-39709}
+\def\@SECcoordFAX{+49 351 463-39710}
+\def\@SECcoordEmail{christof.fetzer@tu-dresden.de}
+
+%% Cover fonts
+\def\@SECacronymFont{\fontsize{24}{28}\usefont{T1}{ptm}{b}{n}\selectfont}
+\def\@SECtitleFont{\fontsize{18}{24}\usefont{T1}{ptm}{b}{n}\selectfont}
+\def\@SEClarge{\fontsize{18}{21}\usefont{T1}{ptm}{m}{n}\selectfont}
+\def\@SECsmall{\fontsize{9}{11}\usefont{T1}{ptm}{m}{n}\selectfont}
+\def\@SECfont{\fontsize{12}{12}\usefont{T1}{ptm}{m}{n}\selectfont}
+\def\@SECsc{\fontshape{sc}\selectfont}
+\def\@SECemph{\fontshape{sl}\selectfont}
+\def\@SECbold{\fontseries{b}\selectfont}
+
+\newdimen\SEC@CoverPageWidth
+\newdimen\SEC@CoverPageHeight
+\newdimen\SEC@TableWidth
+\SEC@CoverPageWidth=\paperwidth
+\SEC@CoverPageHeight=\paperheight
+\SEC@TableWidth=\paperwidth
+\advance\SEC@CoverPageWidth by -1.5in
+\advance\SEC@CoverPageHeight by -2in
+\advance\SEC@TableWidth by -5cm
+
+\newwrite\tf@cov
+\immediate\openout \tf@cov \jobname.cov\relax
+\@writefile{cov}{\fontsize{9}{11}\usefont{T1}{ptm}{m}{n}\selectfont}
+\@writefile{cov}{\begin{tabular*}{\linewidth}{@{}@{\extracolsep{\fill}}|p{0.07\linewidth}|p{0.09\linewidth}|>{\raggedright}p{0.21\linewidth}|>{\raggedright}p{0.1\linewidth}|p{0.4\linewidth}|@{}}}
+\@writefile{cov}{\multicolumn{5}{l}{{\fontseries{b}\selectfont Revision history:}}\\}
+\@writefile{cov}{\hline}
+\@writefile{cov}{{\fontseries{b}\selectfont Version}  &{\fontseries{b}\selectfont Date} &{\fontseries{b}\selectfont Authors} &{\fontseries{b}\selectfont Institution} & {\fontseries{b}\selectfont Description} \\}
+
+\newwrite\tf@par
+\immediate\openout \tf@par \jobname.par\relax
+\@writefile{par}{\fontsize{9}{11}\usefont{T1}{ptm}{m}{n}\selectfont}
+\@writefile{par}{\begin{tabular*}{\linewidth}{@{}@{\extracolsep{\fill}}|p{0.07\linewidth}|p{0.45\linewidth}|p{0.4\linewidth}|@{}}}
+\@writefile{par}{\multicolumn{3}{l}{{\fontseries{b}\selectfont Tasks related to this deliverable:}}\\}
+\@writefile{par}{\hline}
+\@writefile{par}{{\fontseries{b}\selectfont Task No.}  &{\fontseries{b}\selectfont Task description} &{\fontseries{b}\selectfont Partners involved$^\circ$}  \\}
+
+\newcommand{\SEC@CoverBody}{
+\@SECfont
+\parbox{\linewidth}{\centering
+  \vspace{45mm}
+  {\@SECacronymFont SecureCloud}\\
+  \vspace{12mm}
+  {Joint EU-Brazil Research and Innovation Action}\\
+  {\@SECsc Secure Big Data Processing in Untrusted Clouds}\\
+  \vspace{3mm}
+  {http://www.securecloudproject.eu/}\\
+  \vspace{3mm}
+  {\@SECtitleFont  \@SECtitle\\
+  \vspace{3mm}
+  \@SECidentifier}\\
+  \vspace{6mm}
+  \begin{tabular}{@{}r@{: }r@{}}
+  Due date& \@SECdueDate\\
+  Submission date& \@SECsubmissionDate\\
+%  Resubmission date& \@SECresubmissionDate
+  \end{tabular}\\
+}
+\parbox{\linewidth}{\flushright
+  \vspace{10mm} 
+  {\@SECemph Start date of project:} 1 January 2016\\
+  \vspace{5mm}
+  \begin{tabular}{@{}r@{: }r@{}}
+  \if@deliverable
+    {\@SECemph Document type}     & Deliverable\\
+   % {\@SECemph Activity} & RTD\\
+  \fi
+  \if@manreport
+    {\@SECemph Document type}     & Report\\
+    %{\@SECemph Activity} & MGT\\
+  \fi
+  {\@SECemph Work package}  & \@SECworkPackage\\
+  \end{tabular}\\
+  \vspace{3mm}
+  \if@manreport
+  \begin{tabular}{@{}rr@{}}
+  {\@SECemph Coordinator:} & \@SECcoordName\\
+                           & \@SECcoordOrg\\
+                           & \@SECcoordTel\\
+                           & \@SECcoordFAX\\
+                           & \@SECcoordEmail\\
+  \end{tabular}\\
+  \else
+  {\@SECemph Editor:} \@SECeditorName\ (\@SECeditorOrg)\\
+  \fi
+  \vspace{3mm}
+ % {\@SECemph Contributing partners:} \@SECcontributors\\
+  %\vspace{3mm}
+  {\@SECemph Reviewer:} \@SECreviewerone\ (\@SECrevieweroneOrg)\\
+                         \@SECreviewertwo\ (\@SECreviewertwoOrg)\\
+% Add more reviewers if necessary
+%                         \@SECreviewerthree\ (\@SECreviewerthreeOrg)\\
+}
+\vfill
+\begin{tabular*}{\linewidth}{@{}@{\extracolsep{\fill}}|l|l|c|@{}}
+\multicolumn{3}{c}{{\@SECbold Dissemination Level}}\\
+\hline
+{\@SECbold PU} & Public & \@SECisPU\\
+\hline
+{\@SECbold CO} & Confidential, only for members of the consortium (including the Commission Services)  & \@SECisPP\\
+\hline
+{\@SECbold CI} & Classified, as referred to in Commission Decision 2001/844/EC & \@SECisRE\\
+\hline
+\end{tabular*}
+\parbox{\linewidth}{
+  \vspace{15mm}
+\@SECfont{
+SecureCloud has received funding from the European Union's Horizon 2020 research and innovation programme and was supported 
+by the Swiss State Secretariat for Education, Research and Innovation (SERI) under grant agreement No 690111.}
+}
+}
+
+
+\newcommand{\SEC@PrintCoverPage}{\bgroup\global\setbox255\vbox{%
+ \@writefile{cov}{\hline \end{tabular*}}
+ \immediate\closeout\tf@cov
+ \@writefile{par}{\hline}
+ \@writefile{par}{\multicolumn{3}{l}{\mbox{}}\\}
+ \@writefile{par}{\multicolumn{3}{l}{{$^\circ$This task list may not be equivalent to the list of partners contributing as authors to the deliverable}}\\}
+ \@writefile{par}{\multicolumn{3}{l}{{$^*$Task leader}}\\}
+ \@writefile{par}{\end{tabular*}}
+ \immediate\closeout\tf@par
+ \vspace*{-.25in}%
+ \noindent\hspace*{-.25in}%
+ \rlap{
+  \begin{minipage}[t][\SEC@CoverPageHeight][t]{\SEC@CoverPageWidth}%
+   \parbox{\linewidth}{
+     \begin{minipage}[c]{9.5cm}
+    \includegraphics[width=8cm]{./Figures/EC-H2020}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{2.5cm}
+     \includegraphics[width=2.5cm]{./Figures/Rede-nacional.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{4.8cm}
+     \includegraphics[width=3cm]{./Figures/logo-brasil.png}
+    \end{minipage}
+   }
+   \SEC@CoverBody
+  \end{minipage}
+ }%
+}\egroup\shipout\box255}
+
+\newcommand{\SEC@PrintBackCoverPage}{\bgroup\global\setbox254\vbox{
+ \vspace*{-.25in}
+ \noindent\hspace*{-.25in}
+ \rlap{\begin{minipage}[t][\SEC@CoverPageHeight][t]{\SEC@CoverPageWidth}
+  \parbox{\linewidth}{
+  \if@history
+    \input{\jobname.cov}
+    \vspace*{0.25in}\\
+  \fi
+  \if@relatedTasks
+    \input{\jobname.par}
+  \fi
+  \end{minipage}}}
+}\egroup\shipout\box254}
+
+\AtBeginDocument{\SEC@PrintCoverPage\SEC@PrintBackCoverPage\cleardoublepage}
+
+
+\clubpenalty=100000
+\widowpenalty=100000
+\displaywidowpenalty=100000

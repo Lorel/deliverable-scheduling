@@ -1,0 +1,8 @@
+% -*- root: Document.tex -*-
+
+\section{Infrastructure}
+\label{sec:infrastructure}
+
+\GP{} is running on top of a \textsc{Docker Swarm} cluster.
+To build this one, you need a set of hosts reachable by SSH.
+Each host has to have a \textsc{Docker} daemon running and binded on the address \texttt{tcp://0.0.0.0:2375}.

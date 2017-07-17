@@ -1,0 +1,12 @@
+% -*- root: Document.tex -*-
+
+\section{Implementation}
+\label{sec:implementation}
+
+\textsc{Docker Swarm} is implemented in Go, but it offers multiple bindings for other programming languages.
+We fully implement \GP in the Ruby programming language (v2.3.1).
+In particular, we based our code on gem \emph{docker-api}~\cite{docker-api}, a lightweight Ruby binding for the \textsc{Docker Remote} API, using \textsc{Docker} API (v1.16)~\cite{docker-remote}, compliant with the one used by \textsc{Docker Swarm}(v1.22).
+The scheduler orchestrates the containers by leveraging \textsc{Resque}~\cite{resque}, a \textsc{Redis}-backed Ruby library for creating background jobs.
+
+In our evaluation, we map containers to jobs and rely on a \textsc{Resque}-based scheduler to timely deploy them over the \textsc{Docker Swarm}.
+\GP is released as open-source and is freely available at \testbedrepo.

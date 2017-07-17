@@ -1,0 +1,40 @@
+% -*- root: Document.tex -*-
+
+\subsection{Manage a cluster}
+\label{subsec:clustersetup:manage}
+
+We are assuming that your hosts are all reachable by SSH from the CLI.
+You can ensure that by running:
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+$ ./remote_swarm_manager.rb ping
+\end{lstlisting}
+
+Once the configuration of the hosts to use for creating the cluster has been given, here are the few steps needed to create a cluster:
+
+\begin{itemize}
+  \item \emph{Create nodes}: this command will be create the nodes to use in the \textsc{Docker Swarm} cluster, by deploying an image of \textsc{Docker} on the \textsc{Docker} daemon of each host:
+    \begin{lstlisting}[language=bash, basicstyle=\small]
+  $ ./remote_swarm_manager.rb create-nodes
+    \end{lstlisting}
+  \item \emph{Create the cluster}: this command will deploy the \textsc{Docker Swarm} cluster:
+    \begin{lstlisting}[language=bash, basicstyle=\small]
+  $ ./remote_swarm_manager.rb create
+    \end{lstlisting}
+  \item \emph{Monitor the cluster}: this command will deploy the services responsible of monitoring resources:
+    \begin{lstlisting}[language=bash, basicstyle=\small]
+  $ ./remote_swarm_manager.rb monitor
+    \end{lstlisting}
+\end{itemize}
+
+All these commands can be run at once:
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+    $ ./remote_swarm_manager.rb create-nodes create monitor
+\end{lstlisting}
+
+If you want to recreate a cluster, use the command \texttt{remove} before, \textit{e.g.}:
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+    $ ./remote_swarm_manager.rb remove create-nodes create monitor
+\end{lstlisting}

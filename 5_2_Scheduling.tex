@@ -1,0 +1,67 @@
+% -*- root: Document.tex -*-
+
+\section{Container Scheduling}
+\label{sec:scheduling}
+
+Once the container profiles are identified and the associated resource envelopes have been computed by the monitoring module of \GP{}, the scheduling module builds on these resources estimations to identify the best fitting node for each of the container executing in the \emph{nursery} generation.
+
+\begin{algorithm}[ht!]
+  \begin{algorithmic}[1]
+    \Procedure{Schedule}{$envelopes$, $nodes$}
+        \State $containers \gets \Call{Blend}{envelopes}$\label{alg:scheduling:blend}
+        \For{$c \in containers$}
+            \State $res_c \gets \Call{Resources}{$c$}$
+            \For{$n \in nodes$}\Comment{Find the best node for $c$}\label{alg:scheduling:find-best-node}
+                \State $avail_n \gets$ \Call{Availability}{$n$}
+                \If{\Call{Matches}{$res_c$, $avail_n$}}\label{alg:scheduling:pick-best-node}%\Comment{$cont$ fits in $node$}
+                    \State $n \gets$ \Call{Update}{$n$, $res_c$}\label{alg:scheduling:update-node}
+                    \State $nodes \gets$ \Call{ShiftLeft}{$nodes$, $n$}\label{alg:scheduling:shift}
+                    \State \Call{Migrate}{$c$, $n$}\Comment{Async. migration}\label{alg:scheduling:migrate}
+                    \State \textbf{break}\Comment{$c$ succeeds to be scheduled}
+                \EndIf
+            \EndFor
+            \State \Call{Escape}{$c$}\Comment{$c$ fails to be scheduled}\label{alg:scheduling:escape}
+        \EndFor
+    \EndProcedure
+    \vspace{5pt}
+    \Function{Blend}{$envelopes$}\label{alg:scheduling:blend-begin}
+        \State $list \gets \{\}$
+        \State $emptied \gets \textbf{true}$
+        \Repeat\Comment{Blend until all envelopes are emptied}
+            \State $emptied \gets \textbf{true}$
+            \For{$env \in envelopes$}
+                \If{\textbf{not} \Call{IsEmpty}{$env$}}
+                    \State $list \gets list~\Vert~\Call{Head}{env}$ %\Comment{appends}
+                    \State $env \gets \Call{Tail}{env}$ %\Comment{appends}
+                    \State $emptied \gets \Call{IsEmpty}{$env$}$
+                \EndIf
+            \EndFor
+        \Until{$emptied$}
+        \State \Return $list$
+    \EndFunction\label{alg:scheduling:blend-end}
+    \vspace{5pt}
+    \Function{ShiftLeft}{$nodes$, $node$}\label{alg:scheduling:shift-begin}
+        \State $i \gets \Call{Index}{nodes, node}$
+        \State $n \gets \Call{Length}{nodes}$
+        \State $list \gets nodes[0:i-1]~\Vert~nodes[i+1:n-1]$
+        \State $i \gets 0$
+        \State $score \gets \Call{Availability}{node}$
+        \While{$score \ge \Call{Availability}{list[i]}$}
+            \State $i \gets i+1$
+        \EndWhile
+        \State \Return $list[0:i-1]~\Vert~node~\Vert~list[i:n-1]$
+    \EndFunction\label{alg:scheduling:shift-end}
+  \end{algorithmic}
+  \caption{Container scheduling in \GP{}.}\label{alg:scheduling}
+\end{algorithm}
+
+More specifically, Algorithm~\ref{alg:scheduling} describes the scheduling strategy applied by \GP{} to migrate a set of profiled containers at runtime.
+The scheduling phase is triggered for a given set of container $envelopes$ and available $nodes$.
+The algorithm starts by homogeneously blending the content (\emph{i.e.}, container descriptions) of the envelopes (line~\ref{alg:scheduling:blend} and lines~\ref{alg:scheduling:blend-begin}--\ref{alg:scheduling:blend-end}) to increase of the diversity of containers per node.
+From there, it iterates over this ordered set of $containers$ to be scheduled (line~\ref{alg:scheduling:find-best-node}) and picks the first node $n$ among the ordered list of available $nodes$ (as explained in the previous section) that matches the resources requirements of the container $c$ (line~\ref{alg:scheduling:pick-best-node}).
+Upon resource matching, the estimation of the node's resource availability is updated accordingly (line~\ref{alg:scheduling:update-node}) and the order of available $nodes$ is refreshed by shifting the selected node $n$ towards the head of the ordered list (line~\ref{alg:scheduling:shift} and lines~\ref{alg:scheduling:shift-begin}--\ref{alg:scheduling:shift-end}).
+By reasoning on such resources estimations, \GP{} can therefore trigger the migration of the container $c$ to the node $n$ asynchronously (line~\ref{alg:scheduling:migrate}) and thus keep scheduling the remaining nodes in parallel.
+If none of the available $nodes$ fits the resource requirements of the container $c$, the escape trigger of \GP{} (line~\ref{alg:scheduling:escape}) is used to provision a new node within the \emph{young} generation, migrate the container $c$ on this new node, and add the node to the list of available nodes.
+
+The intuition behind this algorithm is to ensure a better distribution of resource consumption and power efficiency of the infrastructure by increasing the entropy (in term of resource diversity) of the containers deployed within each node.
+Furthermore, by reasoning on resource estimations (computed during the monitoring phase) instead of real-time metrics, \GP{} can increase the scheduling parallelism and thus absorb the delay induced by the container migration process (including state snapshotting, binary transfer, remote provisioning steps).

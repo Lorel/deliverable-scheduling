@@ -1,0 +1,37 @@
+% -*- root: Document.tex -*-
+
+\chapter{State-of-the-Art}
+\label{chap:soa}
+
+Resource management and scheduling is an important topic.
+Many researchers have addressed various aspects of scheduling resources during the last decades.
+Scheduling has been addressed in the context of GRID computing~\cite{buyya2000nimrod}, distributed systems~\cite{tannenbaum2001condor}, HPC~\cite{Jackson2001}, batch processing~\cite{capit2005batch}, MapReduce~\cite{Yarn}, and more recently in the context of VM~\cite{litvinski2013openstack} and container scheduling~\cite{Burns:2016:BOK:2930840.2890784} in large clusters.
+
+Distributed job schedulers like the \textsc{Condor} scheduler~\cite{tannenbaum2001condor} performs a \emph{match making} between a job waiting to run and the machines available to run jobs.
+Hence, each job explicitly describes its resource requirements and also a \emph{rank expression} that permits the scheduler to select the machine that is most suited to run this job.
+Also, the resources of a machine have to be explicitly described.
+In \GP, we avoid the need to describe jobs and machines by performing an automatic profiling of the containers and nodes (cf. Section~\ref{sec:monitoring}).
+
+The \textsc{OpenStack Nova} scheduler does not consider CPU load for the assignment of VMs~\cite{litvinski2013openstack}.
+The scheduling in \textsc{OpenStack}, no matter the selected strategy, is rather based on statically defined RAM and CPU size of the VM, known as flavors~\cite{litvinski2013openstack}.
+In our experience, the simple round-robin scheduler results in many cases in situations where all hosts run some VMs and none of the hosts can be switched off to reduce the energy consumption (cf. Chapter~\ref{chap:motivation}).
+
+\textsc{OptSched}\cite{knauth2012energy} compares the energy implications of a \emph{round robin} scheduler, a \emph{first fit} scheduler, and an \emph{optimized} scheduler that knows the run time of (some of) the VMs upon scheduling.
+Knowing the run times before starting a VM helps reduce the total energy consumed by a cluster.
+In \GP, however, run times are not known \emph{a priori} and \GP is able to automatically learn the profile that is used by the scheduler along generations to improve the energy efficiency of the cluster (cf. Section~\ref{sec:evaluation}).
+
+\textsc{Yarn}~\cite{Yarn} is a two-level scheduler that can handle multiple workloads on the same cluster.
+It is request-based and supports locality of scheduling decisions such that jobs can, for example, access data on local disks to avoid remote accesses via the network.
+Nonetheless, the scheduling in \textsc{Yarn} implements a strategy close to the \emph{spread} strategy of \textsc{Docker Swarm}, thus suffering from the same limitations in terms of power usage efficiency.
+
+Google developed a series of container management systems during the last 10 years~\cite{Burns:2016:BOK:2930840.2890784}: \textsc{Borg}, \textsc{Omega}, and more recently \textsc{Kubernetes}.
+Initially, Google started with a centralized container management system called \textsc{Borg}, which remains the main system in use by Google~\cite{DBLP:conf/eurosys/VermaPKOTW15}.
+\textsc{Omega} is based on the lessons learned from \textsc{Borg} and has a principled architecture that includes a centralized transactional store and an optimistic concurrency control.
+In particular, the \textsc{Omega} architecture supports multiple concurrent schedulers.
+Finally, \textsc{Kubernetes} is an open source container system that focuses on simplifying the task of application developers and has less focus on maximizing the utilization of clusters---which is the focus of \textsc{Omega} and \textsc{Borg}.
+Compared to \GP{}, all these approaches does not incorporate the concept of generations within the cluster to automatically learn about the container profiles at runtime.
+
+\textsc{Docker Swarm} is very similar to \textsc{Kubernetes} in that it aims to support \emph{cloud native} applications.
+\textsc{Swarm} permits users to define applications consisting of a set of containers.
+The focus is on simplifying the typical tasks of the application developers like load balancing, elasticity, and high availability.
+Unlike \GP, the main goal of \text{Swarm} is not on ensuring a high utilization of a compute cluster, but this document demonstrates how we succeed to extend it in order to address this concern.

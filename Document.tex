@@ -1,0 +1,120 @@
+\documentclass[a4paper,11pt,oneside,openright,xcolor=dvipsnames]{report}
+\pdfminorversion=7
+
+\usepackage[deliverable,history]{SecureCloud}
+\usepackage{pdflscape}
+\usepackage[hidelinks]{hyperref}
+\usepackage{ulem}
+\usepackage[latin1]{inputenc}
+\usepackage{ifthen}
+\usepackage{algorithm}
+\usepackage{listings}
+
+% define YAML style
+\definecolor{darkgray}{rgb}{0.5,0.5,0.5}
+\definecolor{darkgreen}{rgb}{0.3,0.5,0.3}
+\definecolor{darkblue}{rgb}{0.3,0.3,0.5}
+\definecolor{darkred}{rgb}{0.5,0.3,0.3}
+
+\newcommand\YAMLcolonstyle{\color{darkred}\bfseries}
+\newcommand\YAMLkeystyle{\color{darkblue}\bfseries}
+\newcommand\YAMLvaluestyle{\color{darkgray}\bfseries}
+
+\lstdefinelanguage{YAML}{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{darkgreen}\bfseries,
+  basicstyle=\YAMLkeystyle,
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=[l][\color{orange}]{\&},
+  moredelim=[l][\color{magenta}]{*},
+  moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
+  morestring=[b]',
+  morestring=[b]",
+  literate =    {---}{{\ProcessThreeDashes}}3
+                {>}{{\textcolor{red}\textgreater}}1
+                {|}{{\textcolor{red}\textbar}}1
+                {\ -\ }{{\mdseries\ -\ }}3,
+}
+% END define YAML style
+
+\newboolean{shownotes}
+\setboolean{shownotes}{true}
+% \setboolean{shownotes}{false}
+\ifthenelse{\boolean{shownotes}}
+{ \newcommand{\citenote}[1]{\begin{quote}{\itshape\color{gray}#1}\end{quote}}}
+{ \newcommand{\citenote}[1]{}}
+
+\hyphenpenalty=2000
+\tolerance=1000
+
+\SECtitle{Specification and design of the scheduling for distributed big data applications}
+\SECidentifier{D4.3}
+\SECdueDate{... 2017}
+\SECsubmissionDate{... 2017}
+\SECresubmissionDate{... 2017}
+\SECeditor{Pascal Felber}{UniNE}
+%\SECcontributors{All}
+\SECworkPackage{WP4}
+\SECdissLevelPU
+\SECreviewerone{...}{...}
+\SECreviewertwo{...}{...}
+\SECtask{...}{...}{UniNE$^*$}
+\SECrevision{0.1}{2017/07/17}{Aur\'{e}lien Havet}{UniNE}{First draft}
+
+\fancyhead[RO,LE]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\sloppy
+
+\begin{document}
+
+\setcounter{tocdepth}{2}
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+\tableofcontents
+
+\listoffigures
+
+%\fancyhead{} % clear all header fields
+\fancyhead[RO,LE]{\sffamily\bfseries Secure Big Data Processing in Untrusted Clouds}
+\fancyhead[LO,RE]{\sffamily\bfseries Deliverable 4.3}
+\fancyhead[LO,RE]{\sffamily\bfseries First Revision}
+%\fancyfoot{} % clear all footer fields
+\fancyfoot[CO,CE]{\thepage}
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\glsresetall
+
+\renewcommand{\emph}[1]{\textbf{#1}}
+
+\newcommand{\GP}{\textsc{GenPack}\xspace}
+
+\newcommand{\testbedrepo}{\url{https://bitbucket.org/GenPackTeam/genpack-testbed}}
+\newcommand{\remoteswarmmanagerrepo}{\url{https://bitbucket.org/GenPackTeam/remote-swarm-manager}}
+\newcommand{\genpackschedulerrepo}{\url{https://bitbucket.org/GenPackTeam/genpack-scheduler}}
+
+
+\input{1_Introduction}
+\input{2_SoA}
+\input{3_Motivating}
+\input{4_Architecture}
+\input{5_Components}
+\input{6_PoC}
+\input{7_Summary}
+\input{8_User_manual}
+
+\begin{raggedright}
+
+\bibliographystyle{IEEEtran}
+\bibliography{Document.bib}
+
+\end{raggedright}
+
+\end{document}

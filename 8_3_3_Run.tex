@@ -1,0 +1,17 @@
+% -*- root: Document.tex -*-
+
+\subsection{Run \GP{}}
+\label{subsec:genpacksetup:run}
+
+We are assuming that your \textsc{Docker Swarm} manager, the \textsc{Docker} daemon from your manager host, the servers \textsc{Redis} and \textsc{InfluxDB} are all reachable from where you are launching \GP{}.
+Typically, \GP{} is launched on the \textsc{Docker Swarm} manager host, but you can also launch it remotely if each service is reachable from thre (you can eventually open some SSH tunnels for that).
+
+Once all the requirements described above are checked, run \GP{} from the root of its code directory with the command:
+
+\begin{lstlisting}[basicstyle=\small]
+$ bundle exec rake genpack:init
+\end{lstlisting}
+
+Then you can follow \GP{}'s logs from the file \texttt{log/genpack.log}.
+
+You can now run some containers when it is explained at the beginning of this chapter~\ref{chap:usermanual}.

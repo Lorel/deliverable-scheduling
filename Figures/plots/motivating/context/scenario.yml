@@ -1,0 +1,121 @@
+---
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-1"
+  :type: cpu
+  :node: node-1
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-2"
+  :type: cpu
+  :node: node-1
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-3"
+  :type: cpu
+  :node: node-1
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-4"
+  :type: cpu
+  :node: node-2
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-5"
+  :type: cpu
+  :node: node-2
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-6"
+  :type: mem
+  :node: node-1
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-7"
+  :type: mem
+  :node: node-1
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-8"
+  :type: mem
+  :node: node-2
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-9"
+  :type: mem
+  :node: node-2
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-10"
+  :type: mem
+  :node: node-2
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-11"
+  :type: cpu
+  :node: node-3
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-12"
+  :type: cpu
+  :node: node-3
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-13"
+  :type: cpu
+  :node: node-3
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-14"
+  :type: cpu
+  :node: node-4
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 900M --vm-ops 20000 --metrics-brief"
+  :opts: "-d --memory 900M --memory-swap 0 --cpu-shares 2 --name cpu-15"
+  :type: cpu
+  :node: node-4
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-16"
+  :type: mem
+  :node: node-3
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-17"
+  :type: mem
+  :node: node-3
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-18"
+  :type: mem
+  :node: node-4
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-19"
+  :type: mem
+  :node: node-4
+  :timeout: 250
+  :sleep: 5
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 2 --vm-bytes 900M --vm-ops 40000 --metrics-brief"
+  :opts: "-d --memory 1800M --memory-swap 0 --cpu-shares 1 --name mem-20"
+  :type: mem
+  :node: node-4
+  :timeout: 250
+  :sleep: 5

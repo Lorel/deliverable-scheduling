@@ -1,0 +1,61 @@
+% -*- root: Document.tex -*-
+
+\subsection{Configuration}
+\label{subsec:genpacksetup:config}
+
+\subsubsection{Global Configuration}
+
+The global configuration has to be given into the YAML file \texttt{config.yml} at the root of \GP{}'s code.
+This file has to be build like in the example~\ref{genpack-scheduler-config}.
+All configurations options are detailed below.
+
+\begin{minipage}{\linewidth} %avoid splitting
+% \vspace{10pt}
+\begin{lstlisting}[language=YAML,caption={Configuration file example for \GP{} scheduler.},label=genpack-scheduler-config][t]
+genpack:
+  docker_url: "tcp://localhost:2375"
+  swarm_url: "tcp://localhost:2380"
+  redis_host: 'localhost'
+  redis_port: 6379
+  redis_docker_image: 'redis:3.2.1-alpine'
+  generations:
+    - nursery
+    - young
+    - tenured
+\end{lstlisting}
+\end{minipage}
+
+\begin{itemize}
+  \item \texttt{docker\_url} (\emph{optional}): the url to reach the \textsc{Docker} daemon on manger host;
+  \item \texttt{swarm\_url} (\emph{optional}): the url to reach the \textsc{Docker Swarm} manager;
+  \item \texttt{redis\_host} (\emph{optional}): the address of the \textsc{Redis} server;
+  \item \texttt{redis\_docker\_image} (\emph{optional}): the image to use for deploying the \textsc{Redis} server;
+  \item \texttt{swarm\_url} (\emph{optional}): the url to reach the \textsc{Docker Swarm} manager;
+  \item \texttt{generations} (\emph{mandatory}): the list of the different generations - its order is important because it will define the order between generations.
+\end{itemize}
+
+All mandatory values above are set by default to the ones given in the example~\ref{genpack-scheduler-config}.
+
+\subsubsection{Generation Cycles Configuration}
+
+The cycles of migration between the generations are executed like some tasks.
+These tasks are some jobs performed by \textsc{Resque}\footnote{\textsc{Resque} is a \textsc{Redis}-backed \textsc{Ruby} library for creating background jobs, placing them on multiple queues, and processing them later: \url{https://github.com/resque/resque}.} workers and launched by a task scheduler, \textsc{Resque Scheduler}\footnote{\textsc{Resque Scheduler}, light-weight job scheduling system built on top of \textsc{Resque}: \url{https://github.com/resque/resque-scheduler}.}.
+The frequency of generation cycles is configured in the file \texttt{config/resque\_schedule.yml} (cf. Listing~\ref{resque-scheduler-config}), using the \textsc{Crontab} syntax\footnote{\textsc{Crontab} Quick Reference: \url{http://www.adminschoice.com/crontab-quick-reference}.}.
+In the example given here, each \emph{GenerationCycle} from \texttt{nursery} to \texttt{young} generations is executed every 5 minutes, each one from \texttt{young} to \texttt{tenured} generations each 10 minutes.
+
+\begin{minipage}{\linewidth} %avoid splitting
+% \vspace{10pt}
+\begin{lstlisting}[language=YAML,caption={Configuration file for \textsc{Resque Scheduler}.},label=resque-scheduler-config][t]
+  generation_nursery_cycle:
+    cron: "*/5 * * * *"
+    class: GenerationCycle
+    description: "Run a cycle on generation nursery"
+    args: nursery
+
+  generation_young_cycle:
+    cron: "*/10 * * * *"
+    class: GenerationCycle
+    description: "Run a cycle on generation young"
+    args: young
+\end{lstlisting}
+\end{minipage}

@@ -1,0 +1,30 @@
+% -*- root: Document.tex -*-
+
+\chapter{User Manual}
+\label{chap:usermanual}
+
+\GP{} aims to work seamlessly on top of \textsc{Docker} through a manager of a legacy standalone \textsc{Docker Swarm} cluster.
+That means that you can refer to the documentation of \textsc{Docker}\footnote{\textsc{Docker} CLI user guide: \url{https://docs.docker.com/engine/reference/commandline/cli/}.} and \textsc{Docker Swarm}\footnote{Legacy standalone \textsc{Docker Swarm} documentation: \url{https://docs.docker.com/swarm/overview/}.} for any details to use the \textsc{Docker} CLI for deploying containers on a cluster.
+
+First of all, a \textsc{Docker Swarm} cluster have to be deployed (cf. Section~\ref{sec:clustersetup}), and \GP{} have to be run (cf. Section~\ref{sec:genpacksetup}).
+
+The only requirement to use \GP{} when you are deploying some containers is to deploy them first on the generation \texttt{nursery}.
+For that, a constraint filter\footnote{\textsc{Docker Swarm} constraint filters documentation: \url{https://docs.docker.com/swarm/scheduler/filter/\#use-a-constraint-filter}.}, for targeting the wanted generation, has to be given in the command of container creation, \textit{e.g.} (assuming that the \textsc{Docker Swarm} manager can be reached on the address \texttt{tcp://0.0.0.0:2380}):
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+$ docker -H :2380 run --name nginx -e constraint:generation==nursery -d nginx
+\end{lstlisting}
+
+Then the container \texttt{nginx} is deployed on a node of the generation \texttt{nursery}.
+It will be migrated accross the different generations by \GP{}'s generation cycles.
+
+
+\input{8_1_Infrastructure}
+
+\newpage
+
+\input{8_2_Cluster_setup}
+
+\newpage
+
+\input{8_3_Genpack_setup}

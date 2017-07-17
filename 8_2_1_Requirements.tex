@@ -1,0 +1,23 @@
+% -*- root: Document.tex -*-
+
+\subsection{Requirements and dependencies}
+\label{subsec:clustersetup:requirements}
+
+The CLI requires \textsc{Ruby} v. \texttt{2.3.1}.
+If you don't have this version of \textsc{Ruby} installed on your system, you can use \textsc{RVM}\footnote{Install \textsc{RVM}, Ruby Version Manager: \url{https://rvm.io/}.} to easily install it.
+
+The CLI uses some dependencies defined in the file \texttt{Gemfile}. You need to use \textsc{Bundler}\footnote{\textsc{Bundler}, package manager for \textsc{Ruby}: \url{http://bundler.io/}.} to install them.
+It can be installed with the command:
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+$ gem install bundler
+\end{lstlisting}
+
+Using \textsc{Bundler}, you can install all \textsc{Ruby} dependencies with the command:
+
+\begin{lstlisting}[language=bash, basicstyle=\small]
+$ bundle install
+\end{lstlisting}
+
+Some of the \textsc{Ruby} dependencies have to be built as native extensions.
+For that, \textsc{Bundler} will use \textsc{Make} and \textsc{GCC}: be sure to have those installed on your systems before running the command above.

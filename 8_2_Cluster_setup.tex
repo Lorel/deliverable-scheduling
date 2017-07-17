@@ -1,0 +1,43 @@
+% -*- root: Document.tex -*-
+
+\section{Cluster Setup}
+\label{sec:clustersetup}
+
+A tiny CLI tool has been implemented to setup easily a \textsc{Docker Swarm} cluster.
+This one can be downloaded at \remoteswarmmanagerrepo{}.
+Once the configuration for the different hosts used to build the cluster is given (cf. Subsection~\ref{subsec:clustersetup:config}), the CLI can be used to build a \textsc{Docker Swarm} cluster (cf. Subsection~\ref{subsec:clustersetup:manage}).
+Note that the example of configuration given here is present in the file \texttt{config.yml.example}: you can copy this file to \texttt{config.yml} and modify it with your own configuration.
+
+When the CLI is called without any command, it returns the list of the available ones:
+
+\begin{lstlisting}[basicstyle=\small]
+$ ./remote_swarm_manager.rb
+Welcome to the remote Swarm manager
+
+Version: 0.1.0
+Use one or several (you can chain them) of the following commands:
+
+- help		Print this usage notice
+- version	Print used version of Swarm
+- login		Print command to login on each cluster node (manually)
+- pull		Pull image given in arg, Swarm image by default
+- create	Create a Swarm cluster
+- create-nodes	Create Docker nodes
+- remove	Remove the current cluster
+- ps		Print containers on swarm docker manager
+- info		Print infos about swarm docker manager
+- monitor	Run cAdvisor on cluster nodes for monitoring
+- rm-monitor	Remove cAdvisor and PowerAPI on cluster nodes
+- hostnames	Set hostname for each node
+- export-key	Export your public key on each VM: export-key [filepath]
+- swarm-version	Print used version of Swarm
+- ping		Check if connexions for each VM are well configured
+
+For example:	 ./remote_swarm_manager.rb remove monitor create run
+\end{lstlisting}
+
+\input{8_2_1_Requirements}
+
+\input{8_2_2_Configuration}
+
+\input{8_2_3_Manage}

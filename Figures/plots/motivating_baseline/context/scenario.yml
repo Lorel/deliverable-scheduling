@@ -1,0 +1,13 @@
+---
+- :args: "--cpu 2 --cpu-load 100 --cpu-ops 40000 --vm 1 --vm-bytes 1000M --vm-ops 100000000 --vm-method flip --metrics-brief -v -t 60"
+  :opts: "-d --privileged --memory 1000M --memory-swap 0 --cpu-shares 2 --name cpu-1"
+  :type: cpu
+  :node: node-1
+  :timeout: 150
+  :sleep: 10
+- :args: "--cpu 1 --cpu-load 100 --cpu-ops 20000 --vm 1 --vm-bytes 2000M --vm-ops 100000000 --vm-method flip --metrics-brief -v -t 60"
+  :opts: "-d --privileged --memory 2000M --memory-swap 0 --cpu-shares 1 --name mem-2"
+  :type: mem
+  :node: node-1
+  :timeout: 70
+  :sleep: 150

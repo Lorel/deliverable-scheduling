@@ -1,0 +1,59 @@
+% -*- root: Document.tex -*-
+
+\chapter{Introduction}
+\label{chap:introduction}
+
+\citenote{
+This work package aims at designing and implementing building blocks for developing big data
+applications on top of microservices (WP3), themselves deployed within containers (WP2) in the
+cloud. The main objectives are to make the development of cloud-based big data application easier,
+safer, and faster. More specifically, the work package will result in the following outcomes:
+T4.1: Secure and efficient (i.e., low latency and high throughput) communication mechanisms for
+transmitting big data between microservices, and between clients and big data applications.
+T4.2: A secure distributed key/value data store for big data application to store their data, and
+used by the map/reduce framework of T4.4 to store (intermediary) computation results.
+T4.3: Distributed scheduling mechanisms designed for executing computation tasks (running in
+microservices) close to the data they depend on, and for placing data close to associated compute
+tasks or to related data for better efficiency.
+T4.4: A generic framework for map/reduce computations with big data across microservices, as
+well as a collection of pre-defined components for big data processing.
+This workpackage is led by UniNE, with significant technical contributions from TUD, IMP, and CC.
+}
+
+
+Resource allocation in cloud data centers is an important yet complicated problem.
+On the one hand, over-provisioning tends to waste resources---be they monetary or environmental.
+On the other hand, overbooking yields poor performance and may lead to \emph{service level agreement} (SLA) violations, which also has financial consequences.
+
+To increase the flexibility of task management, cloud data centers largely rely on virtualization to run applications and services for their customers.
+While some providers offer dedicated servers at a premium price, most usually they co-locate several services and/or jobs on the same physical servers in order to optimize the use of available resources and reduce the associated costs.
+
+Efficient mapping of services and jobs---packaged as system containers---to hosts is non-trivial as it should take into account, not only the resources available on the possibly heterogeneous machines, but also the properties and requirements of the containers.
+For instance, some containers might require much memory but little CPU or I/O resources, while others are CPU-intensive, or primarily perform network and disk accesses.
+To make the problem worse, these properties and requirements are not necessarily known in advance and must be learned at runtime.
+
+In this document, we therefore introduce \GP, a novel scheduling framework for containers placement and migration in cloud data centers, which leverages principles from generational \emph{garbage collection} (GC)~\cite{Ungar:1984:GSN:390011.808261,Lieberman:1983:RGC:358141.358147}.
+The core idea of \GP is to partition the servers into several groups, named \emph{generations}.
+A first generation of servers, the \emph{nursery} generation, hosts new containers whose workload are not known.
+There, the system containers are automatically monitored to determine their resource profile on reference machines in order to learn their characteristics.
+To that end, we designed a monitoring framework that combines local statistics and power estimations from the \textsc{cAdvisor}~\cite{cAdvisor} and \textsc{BitWatts}~\cite{DBLP:conf/eurosys/ColmantKFHRS15} agents.
+
+Once their workload is properly understood, the system containers are migrated to a server of the second generation, the \emph{young} generation.
+The placement of system containers in the \emph{young} generation is performed according to resource-aware scheduling policies, and the servers in this generation are in charge of hosting containers whose lifetime is relatively short or unknown.
+
+Finally, if a container runs for long enough in the young generation, it will be migrated to the \emph{old} generation.
+Servers in this last generation are the most stable and tend to host long-term containers.
+Placement is performed so as to optimize the load of the machines by co-locating containers that have complementary resource requirements.
+For instance, a node that has high CPU utilization, but underloaded memory, will be candidate to host a memory-intensive container with low CPU requirements.
+
+\GP allows us to take advantage of the different properties of the server generations and the system containers that they host to flexibly provision resources and thus save energy.
+New machines can be added to each generation as needed.
+This allows us to elastically adapt to demand and load variations---\emph{e.g.}, between day and night---and take advantage of server-specific properties---\emph{e.g.}, use the most energy-efficient machines for the old generation.
+Furthermore, by rationalizing the usage of some servers while shutting down others, one can reach closer to \emph{energy-proportional computing}~\cite{Barroso:2007:Energy:Proportional:Computing}.
+
+\GP provides several key original features: it supports heterogeneous data centers and servers with different properties (\emph{e.g.}, single- vs. multi-core, energy-efficient vs. fast, with or without HW acceleration, etc.); it supports containers whose workload and duration are not known in advance (which is the general case for many application domains) and must be learned at runtime; it supports fluctuating workloads by adapting the number of servers in the different generations, integrating fine-grained power estimation mechanisms, it supports thus enabling energy-efficient container scheduling in cloud data centers.
+
+We have implemented our approach within the \textsc{Docker Swarm} framework~\cite{swarm}.
+In particular, \GP includes a comprehensive monitoring framework, as well as resource management, container migration, and scheduling mechanisms.
+We have tested our system in a dedicated data center with real-world traces from~\cite{DBLP:conf/eurosys/VermaPKOTW15}.
+Our evaluation reveals that \GP is up to 23\% more energy-efficient than \textsc{Swarm}'s built-in schedulers with a real-world trace.
