@@ -27,7 +27,7 @@ Once a container's properties are known, and assuming that it did not complete i
 The young generation hosts containers that have recently started their execution and whose lifetime is still unknown.
 If the container survives long enough, it moves to the next generation.
 The reasoning behind this placement strategy is that, similarly to in-memory data objects, a significant portion of the containers are expected to have a short lifetime.\footnote{We assess this statement in Section~\ref{sec:evaluation}.}
-Furthermore, as the young generation is the most exposed to load variations (\emph{e.g.}, when many new containers are simultaneously launched), it will provide mechanisms for elastically scaling up and down, according to demand.
+Furthermore, as the young generation is the most exposed to load variations (\textit{e.g.}, when many new containers are simultaneously launched), it will provide mechanisms for elastically scaling up and down, according to demand.
 In particular, nodes can be completely turned off during periods of low load in order to considerably reduce the energy consumption of the cluster.
 
 Finally, the \emph{old generation} consists of stable and power-efficient servers that host the long-running containers.

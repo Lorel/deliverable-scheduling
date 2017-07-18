@@ -22,7 +22,7 @@ Note however that we did not observe sensible performance differences when deplo
 
 The scheduling of the containers is orchestrated by \textsc{Docker Swarm} (v1.2.0), the default scheduling framework supported by \textsc{Docker}.
 \textsc{Swarm} comes with a set of predefined scheduling strategies: we compare \GP against each of those along several axes~\cite{docker-strategy}.
-The same strategies are supported by the recently released \textsc{Docker Engine} (v1.12) or other VM/container schedulers (\emph{e.g.}, \textsc{OpenNebula})~\cite{opennebula}.
+The same strategies are supported by the recently released \textsc{Docker Engine} (v1.12) or other VM/container schedulers (\textit{e.g.}, \textsc{OpenNebula})~\cite{opennebula}.
 
 Our cluster is composed of $13$ hosts: one acts as the \textsc{Swarm} master node, orchestrating the deployments, while the remaining worker nodes join the \textsc{Swarm} pool to execute the jobs.
 The cluster thus accounts for $96$ cores and $96\,GB$ of RAM in total.
@@ -37,7 +37,7 @@ Note that it is outside of the scope of this document to provide a full characte
 The original trace is unmanageable for anyone but major companies with huge clusters that have sufficient hardware resources to met the demands of all concurrent jobs.
 Therefore, to deploy the workload into our data center while, at the same time, retaining the same overall workload and realistic load patterns, we sample the original trace to deploy $1/100^{th}$ of the original jobs.
 
-In terms of resource requirements, the original trace describes each job's demanded resources scaled to the Google's most powerful node in that given Borg cell (\emph{e.g.}, a request for $1.0$ would map all the CPU cores of a machine to a given job, and similarly for the memory).
+In terms of resource requirements, the original trace describes each job's demanded resources scaled to the Google's most powerful node in that given Borg cell (\textit{e.g.}, a request for $1.0$ would map all the CPU cores of a machine to a given job, and similarly for the memory).
 We follow the same principle by mapping those to the hardware resources available in our cluster.
 
 \begin{figure}[t!]

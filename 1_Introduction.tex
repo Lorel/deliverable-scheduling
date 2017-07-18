@@ -48,10 +48,10 @@ For instance, a node that has high CPU utilization, but underloaded memory, will
 
 \GP allows us to take advantage of the different properties of the server generations and the system containers that they host to flexibly provision resources and thus save energy.
 New machines can be added to each generation as needed.
-This allows us to elastically adapt to demand and load variations---\emph{e.g.}, between day and night---and take advantage of server-specific properties---\emph{e.g.}, use the most energy-efficient machines for the old generation.
+This allows us to elastically adapt to demand and load variations---\textit{e.g.}, between day and night---and take advantage of server-specific properties---\textit{e.g.}, use the most energy-efficient machines for the old generation.
 Furthermore, by rationalizing the usage of some servers while shutting down others, one can reach closer to \emph{energy-proportional computing}~\cite{Barroso:2007:Energy:Proportional:Computing}.
 
-\GP provides several key original features: it supports heterogeneous data centers and servers with different properties (\emph{e.g.}, single- vs. multi-core, energy-efficient vs. fast, with or without HW acceleration, etc.); it supports containers whose workload and duration are not known in advance (which is the general case for many application domains) and must be learned at runtime; it supports fluctuating workloads by adapting the number of servers in the different generations, integrating fine-grained power estimation mechanisms, it supports thus enabling energy-efficient container scheduling in cloud data centers.
+\GP provides several key original features: it supports heterogeneous data centers and servers with different properties (\textit{e.g.}, single- vs. multi-core, energy-efficient vs. fast, with or without HW acceleration, etc.); it supports containers whose workload and duration are not known in advance (which is the general case for many application domains) and must be learned at runtime; it supports fluctuating workloads by adapting the number of servers in the different generations, integrating fine-grained power estimation mechanisms, it supports thus enabling energy-efficient container scheduling in cloud data centers.
 
 We have implemented our approach within the \textsc{Docker Swarm} framework~\cite{swarm}.
 In particular, \GP includes a comprehensive monitoring framework, as well as resource management, container migration, and scheduling mechanisms.

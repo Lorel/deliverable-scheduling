@@ -48,7 +48,7 @@ Figure~\ref{fig:motivating_baseline} shows the baseline workloads induced by the
 As expected, \emph{cpu-heavy} containers consume more energy---if we subtract the idle power, they require almost 50\% more than \emph{mem-heavy} containers---but they are less memory demanding.
 
 Then, we design a more elaborated deployment scenario where we deploy start $20$ containers, alternating $5$ \emph{cpu-heavy} and $5$ \emph{mem-heavy}.
-In all four deployment scenarios, we gather several measures (\emph{e.g.}, memory allocations, CPU usage, power consumptions).
+In all four deployment scenarios, we gather several measures (\textit{e.g.}, memory allocations, CPU usage, power consumptions).
 Results are aggregated values over all nodes: number of CPU operations by time unit ($ns$), memory used in $GB$, and cumulative power (idle power and dynamic consumption) in $W$.
 We observe that the \texttt{custom} strategy results in a more memory- and energy-efficient schedule because one of the nodes can be turned off---hence saving the idle power---without noticeably changing the number of operation executed---\emph{i.e.}, performance.
 
