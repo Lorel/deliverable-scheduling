@@ -19,7 +19,7 @@ We deploy the containers in a dedicated cluster using four placement strategies:
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=.7\linewidth]{figures/scenario}
+  \includegraphics[width=.7\linewidth]{Figures/scenario}
   \caption{Placement of the containers with 3 scheduling strategies for a given arrival order of containers, and assuming that a node can host 3 \emph{cpu-heavy} containers, or 3 \emph{mem-heavy} containers, or 2 of each type (top). While \texttt{spread} and \texttt{binpack} would require 4 nodes to schedule 12 containers, \texttt{custom} requires only 3 (bottom).}
   \label{fig:motivating-placement}
 \end{figure}
@@ -35,7 +35,7 @@ Although very simplistic, this example illustrates the need for scheduling strat
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=.7\linewidth]{figures/plots/motivating_baseline/motivating_baseline}
+  \includegraphics[width=.7\linewidth]{Figures/plots/motivating_baseline/motivating_baseline}
   \caption{Workload for the two container types (\emph{cpu-heavy} and \emph{mem-heavy}) deployed on a single host.
   Each container runs for one minute, with an idle period in between.
   }
@@ -54,7 +54,7 @@ We observe that the \texttt{custom} strategy results in a more memory- and energ
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=.7\linewidth]{figures/plots/motivating/spread-binpack-random-custom}
+  \includegraphics[width=.7\linewidth]{Figures/plots/motivating/spread-binpack-random-custom}
   \caption{The \texttt{custom} strategy saves memory and energy without affecting performance thanks to more efficient container scheduling.}
   \label{fig:motivating}
 \end{figure}
