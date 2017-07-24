@@ -5,7 +5,8 @@ PAPER = Document
 all:	clean $(PAPER).pdf
 
 $(PAPER).pdf:	$(TEXS) $(FIGS) $(PAPER).bib
-		rubber -d $(PAPER).tex
+	touch $(PAPER).glo
+	rubber -d $(PAPER).tex
 
 clean:
 	rubber -d --clean $(PAPER).tex
